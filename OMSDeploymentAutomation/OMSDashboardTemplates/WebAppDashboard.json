@@ -1,0 +1,608 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "type": "string"
+        },
+        "webAppName": {
+            "type": "string"
+        },
+        "dashboardName": {
+            "type": "string",
+            "defaultValue": "Web Application Dashboard"
+        }
+    },
+    "variables": {
+        "dashboardID": "[concat(uniquestring(resourceGroup().id), uniquestring(parameters('dashboardName')))]"
+    },
+    "resources": [
+        {
+            "properties": {
+              "lenses": {
+                "0": {
+                  "order": 0,
+                  "parts": {
+                    "0": {
+                      "position": {
+                        "x": 0,
+                        "y": 0,
+                        "rowSpan": 1,
+                        "colSpan": 8
+                      },
+                      "metadata": {
+                        "inputs": [],
+                        "type": "Extension[azure]/HubsExtension/PartType/MarkdownPart",
+                        "settings": {
+                          "content": {
+                            "settings": {
+                              "content": "# Application\r\n\r\n",
+                              "title": "",
+                              "subtitle": ""
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "1": {
+                      "position": {
+                        "x": 8,
+                        "y": 0,
+                        "rowSpan": 1,
+                        "colSpan": 8
+                      },
+                      "metadata": {
+                        "inputs": [],
+                        "type": "Extension[azure]/HubsExtension/PartType/MarkdownPart",
+                        "settings": {
+                          "content": {
+                            "settings": {
+                              "content": "# Security",
+                              "title": "",
+                              "subtitle": ""
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "2": {
+                      "position": {
+                        "x": 0,
+                        "y": 1,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "ComponentId",
+                            "value": {
+                              "SubscriptionId": "subscription().subscriptionId",
+                              "ResourceGroup": "resourceGroup().Name",
+                              "Name": "parameters('webAppName')"
+                            }
+                          },
+                          {
+                            "name": "TimeContext",
+                            "value": {
+                              "durationMs": 86400000,
+                              "endTime": null,
+                              "createdTime": "2017-06-21T18:54:26.587Z",
+                              "isInitialTime": true,
+                              "grain": 1,
+                              "useDashboardTimeRange": false
+                            }
+                          },
+                          {
+                            "name": "ChartJsonDefinitionId",
+                            "value": "pinJson:?name={\n  \"chart\": {\n    \"id\": \"AFA7DB59-1397-4242-B783-E330F81F3BF3\",\n    \"grouping\": {\n      \"kind\": \"ByDimension\",\n      \"dimension\": \"context.operation.name\"\n    },\n    \"chartType\": \"Grid\",\n    \"chartHeight\": 1,\n    \"metrics\": [\n      {\n        \"id\": \"requestFailed.count\",\n        \"metricAggregation\": \"Sum\",\n        \"color\": \"msportalfx-bgcolor-d0\"\n      }\n    ],\n    \"priorPeriod\": true,\n    \"horizontalBars\": true,\n    \"showOther\": true,\n    \"aggregation\": \"Sum\",\n    \"percentage\": false,\n    \"palette\": \"fail\",\n    \"yAxisOption\": 0,\n    \"title\": \"\"\n  },\n  \"title\": \"Total of Failed requests by Operation name\",\n  \"filters\": {\n    \"context.device.type\": [\n      \"PC\"\n    ]\n  }\n}"
+                          },
+                          {
+                            "name": "BladeId",
+                            "value": "Dashboard.7881e5fa-2070-4861-8d50-4bf871458a3f"
+                          },
+                          {
+                            "name": "Version",
+                            "value": "1.1"
+                          }
+                        ],
+                        "type": "Extension/AppInsightsExtension/PartType/AppInsightsCollectionPart",
+                        "asset": {
+                          "idInputName": "ComponentId",
+                          "type": "ApplicationInsights"
+                        }
+                      }
+                    },
+                    "3": {
+                      "position": {
+                        "x": 4,
+                        "y": 1,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "ComponentId",
+                            "value": {
+                              "SubscriptionId": "subscription().subscriptionId",
+                              "ResourceGroup": "resourceGroup().Name",
+                              "Name": "parameters('webAppName')"
+                            }
+                          },
+                          {
+                            "name": "TimeContext",
+                            "value": {
+                              "durationMs": 259200000,
+                              "endTime": null,
+                              "createdTime": "2017-11-08T23:29:13.595Z",
+                              "isInitialTime": false,
+                              "grain": 1,
+                              "useDashboardTimeRange": false
+                            }
+                          },
+                          {
+                            "name": "ConfigurationId",
+                            "value": null
+                          },
+                          {
+                            "name": "Version",
+                            "value": "1.0"
+                          },
+                          {
+                            "name": "RestoreData",
+                            "value": "{\"version\":\"Segmentation/2.0\",\"metric\":\"Users\",\"cohortId\":\"\",\"isAntiCohort\":false,\"chartType\":3,\"eventsDataObject\":{\"version\":\"EventsDropdown/1.0\",\"typesWithAllSelected\":{\"1\":true,\"3\":true,\"5\":true},\"events\":[],\"cohortsIds\":[]},\"filters\":[],\"by\":null,\"grain\":\"3h\",\"splitBy\":{\"type\":1,\"value\":{\"value\":\"context.location.country\",\"type\":5,\"balloon\":null}},\"timeContext\":{\"durationMs\":259200000,\"endTime\":null,\"createdTime\":\"2017-11-08T23:29:13.595Z\",\"isInitialTime\":false,\"grain\":1,\"useDashboardTimeRange\":false}}",
+                            "isOptional": true
+                          }
+                        ],
+                        "type": "Extension/AppInsightsExtension/PartType/UsersSegmentationPinnedPart",
+                        "asset": {
+                          "idInputName": "ComponentId",
+                          "type": "ApplicationInsights"
+                        }
+                      }
+                    },
+                    "4": {
+                      "position": {
+                        "x": 8,
+                        "y": 1,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [],
+                        "type": "Extension/Microsoft_Azure_Security/Blade/SecurityDashboardStartBladeV2/Lens/Detection/PartInstance/MainBladeAlertsChartPart"
+                      }
+                    },
+                    "5": {
+                      "position": {
+                        "x": 12,
+                        "y": 1,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [],
+                        "type": "Extension/Microsoft_Azure_Security/Blade/SecurityDashboardStartBladeV2/Lens/Detection/PartInstance/AlertsPerResourceTilePart"
+                      }
+                    },
+                    "6": {
+                      "position": {
+                        "x": 0,
+                        "y": 3,
+                        "rowSpan": 4,
+                        "colSpan": 6
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "ComponentId",
+                            "value": {
+                              "SubscriptionId": "subscription().subscriptionId",
+                              "ResourceGroup": "resourceGroup().Name",
+                              "Name": "parameters('webAppName')"
+                            }
+                          },
+                          {
+                            "name": "MetricsExplorerJsonDefinitionId",
+                            "value": "InsightsTimelineMetrics"
+                          },
+                          {
+                            "name": "TimeContext",
+                            "value": {
+                              "durationMs": 86400000,
+                              "endTime": null,
+                              "createdTime": "2017-06-21T18:54:26.587Z",
+                              "isInitialTime": true,
+                              "grain": 1,
+                              "useDashboardTimeRange": false
+                            }
+                          },
+                          {
+                            "name": "Version",
+                            "value": "1.0"
+                          }
+                        ],
+                        "type": "Extension/AppInsightsExtension/Blade/AspNetOverview/Lens/ApplicationHealthLens/PartInstance/InsightsTimeline_MetricsExplorerPartReferenceOveriew",
+                        "asset": {
+                          "idInputName": "ComponentId",
+                          "type": "ApplicationInsights"
+                        }
+                      }
+                    },
+                    "7": {
+                      "position": {
+                        "x": 6,
+                        "y": 3,
+                        "rowSpan": 4,
+                        "colSpan": 2
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "ComponentId",
+                            "value": {
+                              "SubscriptionId": "subscription().subscriptionId",
+                              "ResourceGroup": "resourceGroup().Name",
+                              "Name": "parameters('webAppName')"
+                            }
+                          }
+                        ],
+                        "type": "Extension/AppInsightsExtension/PartType/AllWebTestsResponseTimeFullGalleryAdapterPart",
+                        "isAdapter": true,
+                        "asset": {
+                          "idInputName": "ComponentId",
+                          "type": "ApplicationInsights"
+                        }
+                      }
+                    },
+                    "8": {
+                      "position": {
+                        "x": 8,
+                        "y": 3,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "id",
+                            "value": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().Name,'/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'), '/views/Updates(', parameters('workspaceName'), ')')]"
+                          },
+                          {
+                            "name": "solutionId",
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeInterval",
+                            "value": {},
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeRange",
+                            "binding": "timeRange",
+                            "isOptional": true
+                          }
+                        ],
+                        "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/ViewTileIFramePart"
+                      }
+                    },
+                    "9": {
+                      "position": {
+                        "x": 12,
+                        "y": 3,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "id",
+                            "value": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().Name,'/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'), '/views/AzureNSGAnalytics(', parameters('workspaceName'), ')')]"
+                          },
+                          {
+                            "name": "solutionId",
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeInterval",
+                            "value": {},
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeRange",
+                            "binding": "timeRange",
+                            "isOptional": true
+                          }
+                        ],
+                        "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/ViewTileIFramePart"
+                      }
+                    },
+                    "10": {
+                      "position": {
+                        "x": 8,
+                        "y": 5,
+                        "rowSpan": 1,
+                        "colSpan": 8
+                      },
+                      "metadata": {
+                        "inputs": [],
+                        "type": "Extension[azure]/HubsExtension/PartType/MarkdownPart",
+                        "settings": {
+                          "content": {
+                            "settings": {
+                              "content": "# Infrastructure & Network\r\n",
+                              "title": "",
+                              "subtitle": ""
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "11": {
+                      "position": {
+                        "x": 8,
+                        "y": 6,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "id",
+                            "value": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().Name,'/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'), '/views/ServiceMap(', parameters('workspaceName'), ')')]"
+                          },
+                          {
+                            "name": "solutionId",
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeInterval",
+                            "value": {},
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeRange",
+                            "binding": "timeRange",
+                            "isOptional": true
+                          }
+                        ],
+                        "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/ViewTileIFramePart"
+                      }
+                    },
+                    "12": {
+                      "position": {
+                        "x": 12,
+                        "y": 6,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "id",
+                            "value": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().Name,'/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'), '/views/NetworkMonitoring(', parameters('workspaceName'), ')')]"
+                          },
+                          {
+                            "name": "solutionId",
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeInterval",
+                            "value": {},
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeRange",
+                            "binding": "timeRange",
+                            "isOptional": true
+                          }
+                        ],
+                        "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/ViewTileIFramePart"
+                      }
+                    },
+                    "13": {
+                      "position": {
+                        "x": 0,
+                        "y": 7,
+                        "rowSpan": 4,
+                        "colSpan": 6
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "ComponentId",
+                            "value": {
+                              "SubscriptionId": "subscription().subscriptionId",
+                              "ResourceGroup": "resourceGroup().Name",
+                              "Name": "parameters('webAppName')"
+                            }
+                          },
+                          {
+                            "name": "DashboardTimeRange",
+                            "binding": "timeRange",
+                            "isOptional": true
+                          },
+                          {
+                            "name": "DataModel",
+                            "isOptional": true
+                          },
+                          {
+                            "name": "TimeContext",
+                            "value": {
+                              "durationMs": 86400000,
+                              "createdTime": "2017-07-19T06:57:17.357Z",
+                              "isInitialTime": false,
+                              "grain": 1,
+                              "useDashboardTimeRange": false
+                            },
+                            "isOptional": true
+                          },
+                          {
+                            "name": "ConfigurationId",
+                            "value": "de602852-0487-4c55-b84b-d19ad8794e4e",
+                            "isOptional": true
+                          }
+                        ],
+                        "type": "Extension/AppInsightsExtension/PartType/TopologyV2AdaptedPart",
+                        "settings": {
+                          "content": {
+                            "DataModelJSON": "{\"sortMetric\":\"Telemetry count\",\"sortOrder\":2,\"filters\":[],\"warningThreshold\":5,\"criticalThreshold\":20,\"nodeConfigurations\":[],\"timeContext\":{\"durationMs\":86400000,\"createdTime\":\"2017-07-19T06:57:42.688Z\",\"isInitialTime\":false,\"grain\":1,\"useDashboardTimeRange\":false},\"userSelectedActiveOnlySetting\":true,\"hasActiveNodes\":false,\"hasNotConfiguredNodes\":false,\"showActiveNodesOnly\":true}"
+                          }
+                        },
+                        "isAdapter": true,
+                        "asset": {
+                          "idInputName": "ComponentId",
+                          "type": "ApplicationInsights"
+                        },
+                        "defaultMenuItemId": "applicationMap"
+                      }
+                    },
+                    "14": {
+                      "position": {
+                        "x": 6,
+                        "y": 7,
+                        "rowSpan": 1,
+                        "colSpan": 2
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "ComponentId",
+                            "value": {
+                              "SubscriptionId": "subscription().subscriptionId",
+                              "ResourceGroup": "resourceGroup().Name",
+                              "Name": "parameters('webAppName')"
+                            }
+                          },
+                          {
+                            "name": "ResourceId",
+                            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourcegroups/', resourceGroup().Name, '/providers/microsoft.insights/components/', parameters('webAppName'))]"
+                          }
+                        ],
+                        "type": "Extension/AppInsightsExtension/PartType/QuickPulseButtonSmallPart",
+                        "asset": {
+                          "idInputName": "ComponentId",
+                          "type": "ApplicationInsights"
+                        }
+                      }
+                    },
+                    "15": {
+                      "position": {
+                        "x": 6,
+                        "y": 8,
+                        "rowSpan": 1,
+                        "colSpan": 2
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "queryInputs",
+                            "value": {
+                              "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourcegroups/', resourceGroup().Name, '/providers/microsoft.insights/components/', parameters('webAppName'))]"
+                            },
+                            "isOptional": true
+                          },
+                          {
+                            "name": "targetResourceIds",
+                            "isOptional": true
+                          },
+                          {
+                            "name": "options",
+                            "isOptional": true
+                          }
+                        ],
+                        "type": "Extension/Microsoft_Azure_Monitoring/PartType/AlertsSummaryPart",
+                        "defaultMenuItemId": "alerts"
+                      }
+                    },
+                    "16": {
+                      "position": {
+                        "x": 8,
+                        "y": 8,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "id",
+                            "value": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().Name,'/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'), '/views/Retail Store VMs Compute')]"
+                          },
+                          {
+                            "name": "solutionId",
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeInterval",
+                            "value": {},
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeRange",
+                            "binding": "timeRange",
+                            "isOptional": true
+                          }
+                        ],
+                        "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/ViewTileIFramePart"
+                      }
+                    },
+                    "17": {
+                      "position": {
+                        "x": 12,
+                        "y": 8,
+                        "rowSpan": 2,
+                        "colSpan": 4
+                      },
+                      "metadata": {
+                        "inputs": [
+                          {
+                            "name": "id",
+                            "value": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().Name,'/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'), '/views/Retail Store VMs Disk')]"
+                          },
+                          {
+                            "name": "solutionId",
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeInterval",
+                            "value": {},
+                            "isOptional": true
+                          },
+                          {
+                            "name": "timeRange",
+                            "binding": "timeRange",
+                            "isOptional": true
+                          }
+                        ],
+                        "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/ViewTileIFramePart"
+                      }
+                    }
+                  }
+                }
+              },
+              "metadata": {
+                "model": {
+                  "timeRange": {
+                    "value": {
+                      "relative": {
+                        "duration": 24,
+                        "timeUnit": 1
+                      }
+                    },
+                    "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+                  }
+                }
+              }
+            },
+            "id": null,
+            "name": "[variables('dashboardID')]",
+            "apiVersion": "2015-08-01-preview",
+            "type": "Microsoft.Portal/dashboards",
+            "location": "eastus",
+            "tags": {
+              "hidden-title": "parameters('dashboardName')"
+            }
+        }
+    ]
+}
