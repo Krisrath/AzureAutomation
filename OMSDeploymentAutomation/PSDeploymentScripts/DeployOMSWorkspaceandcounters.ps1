@@ -124,7 +124,7 @@ function AddPerfCounters ($PerfObject, $PerfCounters, $Instance, $PerfNo)
     {
     $PerfNo ++
       New-AzureRmOperationalInsightsWindowsPerformanceCounterDataSource -ResourceGroupName $AzureRG  -WorkspaceName $WorkspaceName `
-         -ObjectName $PerfObject  -CounterName $Counter -IntervalSeconds 10 -Name "ElastaBytes Performance Counter $PerfNo" -InstanceName $Instance
+         -ObjectName $PerfObject  -CounterName $Counter -IntervalSeconds 10 -Name "Airnet Performance Counter $PerfNo" -InstanceName $Instance
   #Name parameter needs to be unique. Adding random unique number. Name is not being showed anywhere in the Front End
     }
 }
