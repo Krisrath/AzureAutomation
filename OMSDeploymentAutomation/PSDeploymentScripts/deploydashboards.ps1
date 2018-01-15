@@ -1,7 +1,13 @@
-﻿$Deployments = "OperationsDashboard", "SecurityDashboard", "WebAppDashboard"
-$RG = dashboards
+﻿$Deployment1 = "dashboards"
+$Dashboards = "OperationsDashboard", "SecurityDashboard", "WebAppDashboard"
+$Location = "EastUS"
+$AzureRG = OMS-TestAutomation
+$AAA = AGI-TestAutoAcc
 
-ForEach ($Deployment in $Deployments) 
+New-AzureRmAutomationAccount -ResourceGroupName $AzureRG -Location $Location -Name $AAA
+
+ForEach ($Dashboard in $Dashboards) 
 {
-New-AzureRmResourceGroupDeployment -Name $Deployment -ResourceGroupName $RG -TemplateUri https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-storage-account-create/azuredeploy.json -storageAccountType Standard_GRS
+New-AzureRmResourceGroupDeployment -Name $Deployment1 -ResourceGroupName $AzureRG -TemplateUri https://raw.githubusercontent.com/Krisrath/AzureAutomation/master/OMSDeploymentAutomation/OMSDashboardTemplates/$Dashboard.json -storageAccountType Standard_LRS
   }
+  

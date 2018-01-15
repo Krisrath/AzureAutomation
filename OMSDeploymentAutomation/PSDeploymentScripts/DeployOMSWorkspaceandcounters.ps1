@@ -1,21 +1,30 @@
-﻿$Plan = "Free"
-$Location = "EastUS2"
+﻿#Login and Set Subscription
+Login-AzureRmAccount
+Select-AzureRmSubscription -SubscriptionId 420fd085-3e46-4d03-afb0-dda04c916b0b
+#Set Variables for deployment
+$OMSPlan = "Free"
+$AutomationPlan = "Free"
+$Location = "EastUS"
 $Solutions = "Security", "Updates", "SQLAssessment", "AntiMalware", "AgentHealthAssessment", "ChangeTracking", "LogManagement", `
 "SiteRecovery", "Backup", "NetworkMonitoring"
-$ResourceRG = "OMS-TestAutomation"
-$WorkspaceName = "OMSTest"
+$AzureRG = "OMS-TestAutomation"
+$WorkspaceName = "AGI-OMSTestPSAD"
 $WindowsEventLogs = "Application", "Operations Manager", "System"
+$RecoveryServicesVaultName = "omsrecservvault"
+$Dashboard1 = "OperationsDashboard"
+$Dashboard2 = "SecurityDashboard"
+$AAA = "AGI-TestAutoAcc"
 
 try {
-    Get-AzureRmResourceGroup -Name $ResourceRG -ErrorAction Stop
+    Get-AzureRmResourceGroup -Name $AzureRG -ErrorAction Stop
 } catch {
-    New-AzureRmResourceGroup -Name $ResourceRG -Location $Location
+    New-AzureRmResourceGroup -Name $AzureRG -Location $Location
 }
 # Create the workspace
-New-AzureRmOperationalInsightsWorkspace -Location $Location -Name $WorkspaceName -Sku $Plan -ResourceGroupName $ResourceRG
+New-AzureRmOperationalInsightsWorkspace -Location $Location -Name $WorkspaceName -Sku $OMSPlan -ResourceGroupName $AzureRG
  
 foreach ($solution in $Solutions) {
-    Set-AzureRmOperationalInsightsIntelligencePack -ResourceGroupName $ResourceRG  -WorkspaceName $WorkspaceName -IntelligencePackName $solution -Enabled $true
+    Set-AzureRmOperationalInsightsIntelligencePack -ResourceGroupName $AzureRG  -WorkspaceName $WorkspaceName -IntelligencePackName $solution -Enabled $true
 }
 
 #Instance description. For Example: LogicalDisk(*)\Disk Read Bytes/sec, Instance is: *
@@ -102,7 +111,7 @@ $CounterSystem = "Processor Queue Length"
  
 ForEach ( $WEvent in $WindowsEventLogs)
 {
-    New-AzureRmOperationalInsightsWindowsEventDataSource -ResourceGroupName $ResourceRG  `
+    New-AzureRmOperationalInsightsWindowsEventDataSource -ResourceGroupName $AzureRG  `
         -WorkspaceName $WorkspaceName -EventLogName $WEvent -CollectErrors -CollectWarnings -Name "$Wevent Event Log"
 }
  
@@ -113,7 +122,7 @@ function AddPerfCounters ($PerfObject, $PerfCounters, $Instance, $PerfNo)
     ForEach ($Counter in $PerfCounters)
     {
     $PerfNo ++
-      New-AzureRmOperationalInsightsWindowsPerformanceCounterDataSource -ResourceGroupName $ResourceRG  -WorkspaceName $WorkspaceName `
+      New-AzureRmOperationalInsightsWindowsPerformanceCounterDataSource -ResourceGroupName $AzureRG  -WorkspaceName $WorkspaceName `
          -ObjectName $PerfObject  -CounterName $Counter -IntervalSeconds 10 -Name "ElastaBytes Performance Counter $PerfNo" -InstanceName $Instance
   #Name parameter needs to be unique. Adding random unique number. Name is not being showed anywhere in the Front End
     }
@@ -136,3 +145,13 @@ AddPerfCounters -PerfObject $ObjectSQLServerSQLErrors -PerfCounter $CounterSQLSe
 AddPerfCounters -PerfObject $ObjectSystem -PerfCounter $CounterSystem -Instance $InstanceNameAll -PerfNo 160
 AddPerfCounters -PerfObject $ObjectMemory -PerfCounter $CounterMemory -Instance $InstanceNameAll -PerfNo 170
 AddPerfCounters -PerfObject $ObjectCache -PerfCounter $CounterCache -Instance $InstanceNameAll -PerfNo 180
+
+#Create Azure Automation Account
+New-AzureRmAutomationAccount -ResourceGroupName $AzureRG -Location $Location -Name $AAA -Plan $AutomationPlan
+
+#Create Recovery Services Vault
+New-AzureRmRecoveryServicesVault -Name $RecoveryServicesVaultName -ResourceGroupName $AzureRG -Location $Location 
+
+#Create Azure Dashboards
+New-AzureRmResourceGroupDeployment -Name $Dashboard1 -ResourceGroupName $AzureRG -TemplateUri https://raw.githubusercontent.com/Krisrath/AzureAutomation/master/OMSDeploymentAutomation/OMSDashboardTemplates/$Dashboard1.json -automationAccountName $AAA -workspacename $WorkspaceName -recoveryServicesVaultName $RecoveryServicesVaultName
+New-AzureRmResourceGroupDeployment -Name $Dashboard2 -ResourceGroupName $AzureRG -TemplateUri https://raw.githubusercontent.com/Krisrath/AzureAutomation/master/OMSDeploymentAutomation/OMSDashboardTemplates/$Dashboard2.json -workspacename $WorkspaceName 
