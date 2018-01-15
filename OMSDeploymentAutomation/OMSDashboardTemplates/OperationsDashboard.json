@@ -609,7 +609,7 @@
             "type": "Microsoft.Portal/dashboards",
             "location": "eastus",
             "tags": {
-                "hidden-title": "parameters('dashboardName')"
+                "hidden-title": "[parameters('dashboardName')]"
             }
         }
     ]

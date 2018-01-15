@@ -148,7 +148,7 @@ AddPerfCounters -PerfObject $ObjectMemory -PerfCounter $CounterMemory -Instance 
 AddPerfCounters -PerfObject $ObjectCache -PerfCounter $CounterCache -Instance $InstanceNameAll -PerfNo 180
 
 #Create Azure Automation Account
-New-AzureRmAutomationAccount -ResourceGroupName $AzureRG -Location $Location -Name $AAA -Plan $AutomationPlan
+New-AzureRmAutomationAccount -ResourceGroupName $AzureRG -Location $AALocation -Name $AAA -Plan $AutomationPlan
 
 #Create Recovery Services Vault
 New-AzureRmRecoveryServicesVault -Name $RecoveryServicesVaultName -ResourceGroupName $AzureRG -Location $Location 
