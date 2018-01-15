@@ -14,6 +14,7 @@ $RecoveryServicesVaultName = "omsrecservvault"
 $Dashboard1 = "OperationsDashboard"
 $Dashboard2 = "SecurityDashboard"
 $AAA = "AGI-TestAutoAcc"
+$AALocation = "EastUS2"
 
 try {
     Get-AzureRmResourceGroup -Name $AzureRG -ErrorAction Stop
@@ -154,4 +155,4 @@ New-AzureRmRecoveryServicesVault -Name $RecoveryServicesVaultName -ResourceGroup
 
 #Create Azure Dashboards
 New-AzureRmResourceGroupDeployment -Name $Dashboard1 -ResourceGroupName $AzureRG -TemplateUri https://raw.githubusercontent.com/Krisrath/AzureAutomation/master/OMSDeploymentAutomation/OMSDashboardTemplates/$Dashboard1.json -automationAccountName $AAA -workspacename $WorkspaceName -recoveryServicesVaultName $RecoveryServicesVaultName
-New-AzureRmResourceGroupDeployment -Name $Dashboard2 -ResourceGroupName $AzureRG -TemplateUri https://raw.githubusercontent.com/Krisrath/AzureAutomation/master/OMSDeploymentAutomation/OMSDashboardTemplates/$Dashboard2.json -workspacename $WorkspaceName 
+New-AzureRmResourceGroupDeployment -Name $Dashboard2 -ResourceGroupName $AzureRG -TemplateUri https://raw.githubusercontent.com/Krisrath/AzureAutomation/master/OMSDeploymentAutomation/OMSDashboardTemplates/$Dashboard2.json -workspacename $WorkspaceName
