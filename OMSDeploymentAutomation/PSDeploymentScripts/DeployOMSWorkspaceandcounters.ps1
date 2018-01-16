@@ -1,6 +1,6 @@
 ﻿#Login and Set Subscription
 Login-AzureRmAccount
-Select-AzureRmSubscription -SubscriptionId 420fd085-3e46-4d03-afb0-dda04c916b0b
+Select-AzureRmSubscription -SubscriptionId <xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx>
 #Set Variables for deployment
 $OMSPlan = "Free"
 $AutomationPlan = "Free"

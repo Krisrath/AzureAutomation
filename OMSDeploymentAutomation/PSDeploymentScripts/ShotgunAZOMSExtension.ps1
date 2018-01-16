@@ -1,8 +1,8 @@
 ﻿#Login-AzureRmAccount
  
 #Select-AzureRmSubscription -SubscriptionId $SubID
-$Settings = @{"workspaceId"="bb1389d0-1c8c-41f8-b950-96f1dafc4068"};
-$ProtectedSettings = @{"workspaceKey"="zbSyHRz7TEXf3xkUSpdzq4qLFCwp6V8Mxw0AJzpOJLrT6MvqL1AUt9eFN2G7po6/cwl9sHqaHyQKVA5KnTuCGw=="};
+$Settings = @{"workspaceId"="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"};
+$ProtectedSettings = @{"workspaceKey"="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"};
 $RG = Get-AzureRmResourceGroup
  
 foreach ($Resource in $RG.ResourceGroupName)

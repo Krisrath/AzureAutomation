@@ -1,4 +1,4 @@
-Select-AzureRMSubscription -SubscriptionId 420fd085-3e46-4d03-afb0-dda04c916b0b
+Select-AzureRMSubscription -SubscriptionId <xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx>
     #Write-Host $subscription.SubscriptionName
  
     foreach ($vm in Get-AzureRmVM)
