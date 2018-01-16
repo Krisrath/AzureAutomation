@@ -1,19 +1,24 @@
 ﻿#Login and Set Subscription
 Login-AzureRmAccount
-Select-AzureRmSubscription -SubscriptionId <xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx>
+[void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+$title = 'Choose Azure Subscription'
+$msg   = 'Enter your subscription ID:'
+$SubID = [Microsoft.VisualBasic.Interaction]::InputBox($msg, $title)
+Select-AzureRmSubscription -SubscriptionId $SubID
 #Set Variables for deployment
+$CompShortCode = "AGI"
 $OMSPlan = "Free"
 $AutomationPlan = "Free"
 $Location = "EastUS"
 $Solutions = "Security", "Updates", "SQLAssessment", "AntiMalware", "AgentHealthAssessment", "ChangeTracking", "LogManagement", `
 "SiteRecovery", "Backup", "NetworkMonitoring"
-$AzureRG = "OMS-TestAutomation"
-$WorkspaceName = "AGI-OMSTestPSAD"
+$AzureRG = "$Compshortcode-OMS-TestAutomation"
+$WorkspaceName = "$Compshortcode-OMSWorkspace"
 $WindowsEventLogs = "Application", "Operations Manager", "System"
-$RecoveryServicesVaultName = "omsrecservvault"
+$RecoveryServicesVaultName = "$Compshortcode-OMSRecVault"
 $Dashboard1 = "OperationsDashboard"
 $Dashboard2 = "SecurityDashboard"
-$AAA = "AGI-TestAutoAcc"
+$AAA = "$Compshortcode-OMSAutoAcc"
 $AALocation = "EastUS2"
 
 try {
