@@ -1,4 +1,4 @@
-﻿#Login and Set Subscription
+#Login and Set Subscription
 Login-AzureRmAccount
 [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
 $title = 'Choose Azure Subscription'
@@ -6,6 +6,7 @@ $msg   = 'Enter your subscription ID:'
 $SubID = [Microsoft.VisualBasic.Interaction]::InputBox($msg, $title)
 Select-AzureRmSubscription -SubscriptionId $SubID
 #Set Variables for deployment
+
 $CompShortCode = "AGI"
 $OMSPlan = "Free"
 $AutomationPlan = "Free"
