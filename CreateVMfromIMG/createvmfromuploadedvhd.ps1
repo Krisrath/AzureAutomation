@@ -1,6 +1,6 @@
 #Login-AzureRmAccount
 #Get-AzureRmSubscription -SubscriptionId xxxxxxxxxxxxxxxxxxxxxxxxxxxxx | Select-AzureRmSubscription
-Select-AzureRmSubscription -SubscriptionId xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Select-AzureRmSubscription -SubscriptionId 420fd085-3e46-4d03-afb0-dda04c916b0b
 ## Customize for Your Environment
 $ResourceGroupName = "ManageIQTest"
 $StorageAccountName = "horizonimagestore"
@@ -15,15 +15,7 @@ $InterfaceName = "manageIQ-nic"
 $VNetName = "adVNET"
 $PublicIPName = "manageiq-test-public-ip"
 
-$SSHKey = '---- BEGIN SSH2 PUBLIC KEY ----
-Comment: "rsa-key-20171227"
-AAAAB3NzaC1yc2EAAAABJQAAAQEAp9i2zdKLNEiyo75hcfT1lczPlb9XX/fnlW2G
-ghI6DIcXfvEiqaP7NZbNiKjOVB+PWxSLSWEFVfAFKAluGTQF0pPDv/PuVUkABGpJ
-ayHxGTZNhDaanNbWA2XzTxTHmjlvr7Ca+zLWZPmoPy39ZW1cHzd+EsuLIPNssNgQ
-QhtPVp2y13xrYiiCWPI0VozK5D1o5B8wCctOvupOh6wNOH+JKtOq6XDWsCebVR68
-FWWrl4lTttvncVWLYUhLIlyRIvtdkLGq+9XJEbtYqGFdzJTw6l9uSPQ9Niblwpqy
-IxvMhnvS8JGN0luvcEcLMFmebPt1Yd9+D4TbkOsGaUQdknsGyw==
----- END SSH2 PUBLIC KEY ----'
+$SSHKey = 
 
 ##
 
