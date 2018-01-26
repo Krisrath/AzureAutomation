@@ -1,18 +1,20 @@
 #Login-AzureRmAccount
 #Get-AzureRmSubscription -SubscriptionId xxxxxxxxxxxxxxxxxxxxxxxxxxxxx | Select-AzureRmSubscription
-Select-AzureRmSubscription -SubscriptionId 420fd085-3e46-4d03-afb0-dda04c916b0b
+Select-AzureRmSubscription -SubscriptionId xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ## Customize for Your Environment
 $ResourceGroupName = "ManageIQTest"
 $StorageAccountName = "horizonimagestore"
-$BlobNameDest = "manageiq-azure-fine-4.vhd"
+$BlobNameSource = "manageiq-azure-fine-4fixed.vhd"
+$BlobNameDest = "manageiqosdsk0.vhd"
 $BlobDestinationContainer = "images"
 $VMName = "manageiq-test"
 $DeploySize= "Standard_D2_V3"
-$vmUserName = "admin"
+$vmUserName = "manageiqadmin"
 $Location = 'eastus2'
 
 $InterfaceName = "manageIQ-nic"
-$VNetName = "adVNET"
+$VNet = Get-AzureRmVirtualNetwork -Name adVNET -ResourceGroupName HorizonTest
+$Subnet = Get-AzureRmVirtualNetworkSubnetConfig -Name adSubnet -VirtualNetwork $VNet
 $PublicIPName = "manageiq-test-public-ip"
 
 $SSHKey = 
@@ -21,16 +23,15 @@ $SSHKey =
 
 $StorageAccount = Get-AzureRmStorageAccount -ResourceGroup 'HorizonTest' -Name $StorageAccountName
 
-$SourceImageUri = "https://$StorageAccountName.blob.core.windows.net/$BlobNameSource"
+$SourceImageUri = "https://$StorageAccountName.blob.core.windows.net/images/$BlobNameSource"
 $Location = $StorageAccount.Location
 $OSDiskName = $VMName
 
 # Network
 $PIp = New-AzureRmPublicIpAddress -Name $PublicIPName -ResourceGroupName $ResourceGroupName -Location $Location -AllocationMethod Dynamic -Force
-$VNet = 'adVNET'
-$Subnet = 'adSubnet'
-$Interface = New-AzureRmNetworkInterface -Name $InterfaceName -ResourceGroupName $ResourceGroupName -Location $Location -Subnet $Subnet -PublicIpAddressId $PIp.Id -Force
-
+#$Subnet = 'adSubnet'
+#$Interface = New-AzureRmNetworkInterface -Name $InterfaceName -ResourceGroupName $ResourceGroupName -Location $Location -Subnet $Subnet -PublicIpAddressId $PIp.Id -Force
+$Interface = New-AzureRmNetworkInterface -Name $InterfaceName -ResourceGroupName $ResourceGroupName -Location $Location -SubnetId $Subnet.Id -PublicIpAddressId $PIp.Id -Force
 # Specify the VM Name and Size
 $VirtualMachine = New-AzureRmVMConfig -VMName $VMName -VMSize $DeploySize
 
@@ -44,7 +45,7 @@ $VirtualMachine = Add-AzureRmVMNetworkInterface -VM $VirtualMachine -Id $Interfa
 # Add Disk
 $OSDiskUri = $StorageAccount.PrimaryEndpoints.Blob.ToString() + $BlobDestinationContainer + "/" + $BlobNameDest
 
-$VirtualMachine = Set-AzureRmVMOSDisk -VM $VirtualMachine -Name $OSDiskName -VhdUri $OSDiskUri -CreateOption fromImage -SourceImageUri $SourceImageUri -Linux
+$VirtualMachine = Set-AzureRmVMOSDisk -VM $VirtualMachine -DiskSizeInGB '127' -Name $OSDiskName -VhdUri $OSDiskUri -CreateOption fromImage -SourceImageUri $SourceImageUri -Linux
 
 # Set SSH key
 Add-AzureRmVMSshPublicKey -VM $VirtualMachine -Path “/home/$VMUserName/.ssh/authorized_keys” -KeyData $SSHKey
